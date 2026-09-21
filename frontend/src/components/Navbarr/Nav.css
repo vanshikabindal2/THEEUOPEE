@@ -1,0 +1,1200 @@
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+  width: 100%;
+  height: 78px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.navbar-inner {
+  width: 100%;
+  height: 100%;
+  padding: 0 42px;
+
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.navbar-logo img {
+  width: 150px;
+  height: auto;
+  display: block;
+}
+
+
+/* =========================================================
+   DESKTOP NAV
+========================================================= */
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  gap: 48px;
+}
+
+.desktop-nav a {
+  position: relative;
+
+  color: #151515;
+  text-decoration: none;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  white-space: nowrap;
+}
+
+.desktop-nav a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+
+  width: 0;
+  height: 1px;
+
+  background: #151515;
+
+  transition: width 0.3s ease;
+}
+
+.desktop-nav a:hover::after {
+  width: 100%;
+}
+
+
+/* =========================================================
+   NAVBAR ACTIONS
+========================================================= */
+
+.navbar-actions {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SEARCH BAR
+========================================================= */
+
+.nav-search {
+  width: 245px;
+  height: 42px;
+
+  padding: 0 13px;
+
+  border: 1px solid #dedede;
+  background: #fafafa;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #151515;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.nav-search:hover {
+  border-color: #bcbcbc;
+  background: #fff;
+}
+
+.nav-search span {
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 13px;
+  color: #777;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   ICONS
+========================================================= */
+
+.nav-icon {
+  position: relative;
+
+  width: 32px;
+  height: 32px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #151515;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.nav-icon:hover {
+  transform: translateY(-1px);
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   CART COUNT
+========================================================= */
+
+.cart-count {
+  position: absolute;
+
+  top: -2px;
+  right: -4px;
+
+  min-width: 14px;
+  height: 14px;
+
+  padding: 0 3px;
+
+  border-radius: 50%;
+
+  background: #151515;
+  color: #fff;
+
+  font-size: 8px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.mobile-menu-btn {
+  display: none;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #151515;
+
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-menu {
+  display: none;
+}
+
+
+/* =========================================================
+   SEARCH BACKDROP
+========================================================= */
+
+.search-backdrop {
+  position: fixed;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 78px;
+
+  z-index: 1998;
+
+  background: rgba(15, 15, 15, 0.45);
+
+  animation: backdropFade 0.2s ease;
+}
+
+@keyframes backdropFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   SEARCH DROPDOWN
+========================================================= */
+
+.search-dropdown {
+  position: fixed;
+
+  top: 78px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: min(1100px, calc(100% - 80px));
+
+  background: #fff;
+
+  z-index: 1999;
+
+  border-radius: 0 0 14px 14px;
+
+  overflow: hidden;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+
+  animation: dropdownShow 0.25s ease;
+}
+
+@keyframes dropdownShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+
+/* =========================================================
+   SEARCH TOP
+========================================================= */
+
+.search-dropdown-top {
+  height: 68px;
+
+  padding: 0 24px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  border-bottom: 1px solid #eee;
+
+  box-sizing: border-box;
+}
+
+.search-main-input {
+  flex: 1;
+
+  height: 43px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border: 1px solid #d7d7d7;
+
+  padding: 0 13px;
+
+  color: #151515;
+
+  box-sizing: border-box;
+}
+
+.search-main-input input {
+  flex: 1;
+
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 15px;
+
+  color: #151515;
+}
+
+.search-main-input input::placeholder {
+  color: #777;
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+========================================================= */
+
+.search-input-clear {
+  width: 28px;
+  height: 28px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #555;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.search-close-btn {
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #151515;
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease;
+}
+
+.search-close-btn:hover {
+  transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   SEARCH CONTENT
+========================================================= */
+
+.search-content {
+  display: grid;
+
+  grid-template-columns: 39% 61%;
+
+  min-height: 390px;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+========================================================= */
+
+.search-left {
+  padding: 27px 30px;
+
+  border-right: 1px solid #eee;
+
+  box-sizing: border-box;
+}
+
+.search-section {
+  margin-bottom: 30px;
+}
+
+.search-section h3,
+.search-right-heading h3 {
+  margin: 0 0 17px;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  color: #172033;
+}
+
+
+/* =========================================================
+   RECENT SEARCH
+========================================================= */
+
+.recent-search {
+  width: fit-content;
+  min-width: 170px;
+
+  padding: 10px 13px;
+
+  border: 1px solid #e2e2e2;
+
+  background: #fff;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #687184;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.recent-search:hover {
+  color: #111;
+  border-color: #111;
+}
+
+
+/* =========================================================
+   TRENDING SEARCHES
+========================================================= */
+
+.trending-searches {
+  display: flex;
+  flex-direction: column;
+}
+
+.trending-searches button {
+  width: 100%;
+  height: 40px;
+
+  padding: 0 8px;
+
+  border: none;
+  border-bottom: 1px solid #eee;
+
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #687184;
+
+  font-size: 13px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    padding 0.2s ease;
+}
+
+.trending-searches button:hover {
+  color: #111;
+  padding-left: 13px;
+}
+
+.trending-searches button svg {
+  opacity: 0;
+
+  transition: opacity 0.2s ease;
+}
+
+.trending-searches button:hover svg {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
+
+.search-right {
+  padding: 27px 28px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+.search-right-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-right-heading h3 {
+  margin-bottom: 18px;
+}
+
+.search-right-heading > span {
+  font-size: 9px;
+
+  letter-spacing: 1.5px;
+
+  color: #888;
+}
+
+
+/* =========================================================
+   SEARCH PRODUCTS
+========================================================= */
+
+.search-products {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+.search-product {
+  min-width: 0;
+
+  color: #151515;
+
+  text-decoration: none;
+}
+
+.search-product-image {
+  width: 100%;
+  height: 230px;
+
+  overflow: hidden;
+
+  background: #f5f5f5;
+}
+
+.search-product-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.45s ease;
+}
+
+.search-product:hover .search-product-image img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   PRODUCT INFO
+========================================================= */
+
+.search-product-info {
+  padding-top: 10px;
+}
+
+.search-product-name {
+  margin: 0;
+
+  min-height: 36px;
+
+  color: #3d4654;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.search-product-bottom {
+  margin-top: 7px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-product-price {
+  margin: 0;
+
+  color: #111;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PRODUCT ARROW
+========================================================= */
+
+.product-arrow {
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #151515;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.search-product:hover .product-arrow {
+  background: #111;
+  color: #fff;
+}
+
+
+/* =========================================================
+   NO SEARCH RESULT
+========================================================= */
+
+.no-search-result {
+  grid-column: 1 / -1;
+
+  padding: 40px 0;
+
+  color: #777;
+
+  font-size: 14px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   TABLET / SMALL DESKTOP
+   701px - 1100px
+========================================================= */
+
+@media (min-width: 701px) and (max-width: 1100px) {
+
+  .navbar {
+    height: 74px;
+  }
+
+  .navbar-inner {
+    height: 74px;
+
+    padding: 0 24px;
+  }
+
+
+  /* LOGO */
+
+  .navbar-logo img {
+    width: 125px;
+  }
+
+
+  /* NAV */
+
+  .desktop-nav {
+    position: static;
+
+    transform: none;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    gap: 24px;
+  }
+
+  .desktop-nav a {
+    font-size: 12px;
+
+    letter-spacing: 0.2px;
+  }
+
+
+  /* ACTIONS */
+
+  .navbar-actions {
+    margin-left: 0;
+
+    gap: 8px;
+  }
+
+
+  /* SEARCH */
+
+  .nav-search {
+    width: 165px;
+    height: 40px;
+
+    padding: 0 11px;
+  }
+
+  .nav-search span {
+    font-size: 12px;
+  }
+
+
+  /* ICONS */
+
+  .nav-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+
+  /* SEARCH DROPDOWN */
+
+  .search-backdrop {
+    top: 74px;
+  }
+
+  .search-dropdown {
+    top: 74px;
+
+    width: calc(100% - 48px);
+  }
+
+  .search-content {
+    grid-template-columns: 35% 65%;
+  }
+
+  .search-products {
+    gap: 12px;
+  }
+
+  .search-product-image {
+    height: 200px;
+  }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   701px - 850px
+========================================================= */
+
+@media (min-width: 701px) and (max-width: 850px) {
+
+  .navbar-inner {
+    padding: 0 16px;
+  }
+
+  .navbar-logo img {
+    width: 110px;
+  }
+
+  .desktop-nav {
+    gap: 16px;
+  }
+
+  .desktop-nav a {
+    font-size: 11px;
+  }
+
+  .navbar-actions {
+    gap: 4px;
+  }
+
+  .nav-search {
+    width: 135px;
+  }
+
+  .nav-search span {
+    font-size: 11px;
+  }
+
+  .nav-icon {
+    width: 28px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   700px AND BELOW
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    height: 68px;
+  }
+
+  .navbar-inner {
+    height: 68px;
+
+    padding: 0 12px;
+  }
+
+
+  /* LOGO */
+
+  .navbar-logo {
+    order: 1;
+  }
+
+  .navbar-logo img {
+    width: 105px;
+  }
+
+
+  /* DESKTOP NAV */
+
+  .desktop-nav {
+    display: none;
+  }
+
+
+  /* ACTIONS */
+
+  .navbar-actions {
+    order: 2;
+
+    gap: 2px;
+
+    margin-left: auto;
+  }
+
+
+  /* SEARCH ICON */
+
+  .nav-search {
+    width: 28px;
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-search span {
+    display: none;
+  }
+
+
+  /* ICONS */
+
+  .nav-icon {
+    width: 28px;
+    height: 30px;
+  }
+
+  .nav-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+
+  /* CART COUNT */
+
+  .cart-count {
+    top: -1px;
+    right: -2px;
+
+    min-width: 12px;
+    height: 12px;
+
+    font-size: 7px;
+  }
+
+
+  /* MOBILE MENU BUTTON */
+
+  .mobile-menu-btn {
+    order: 3;
+
+    display: flex;
+
+    width: 34px;
+    height: 34px;
+
+    margin-left: 4px;
+  }
+
+
+  /* MOBILE MENU */
+
+  .mobile-menu {
+    display: block;
+
+    position: absolute;
+
+    left: 0;
+    top: 68px;
+
+    width: 100%;
+
+    background: #fff;
+
+    border-bottom: 1px solid #eee;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(-10px);
+
+    transition:
+      opacity 0.25s ease,
+      visibility 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+  }
+
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu a {
+    padding: 17px 20px;
+
+    border-bottom: 1px solid #f1f1f1;
+
+    color: #151515;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    letter-spacing: 0.5px;
+  }
+
+
+  /* SEARCH BACKDROP */
+
+  .search-backdrop {
+    top: 68px;
+  }
+
+
+  /* SEARCH DROPDOWN */
+
+  .search-dropdown {
+    top: 68px;
+
+    left: 0;
+
+    transform: none;
+
+    width: 100%;
+
+    max-height: calc(100vh - 68px);
+
+    overflow-y: auto;
+
+    border-radius: 0;
+
+    animation: mobileSearchShow 0.25s ease;
+  }
+
+  @keyframes mobileSearchShow {
+
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+  /* SEARCH INPUT */
+
+  .search-dropdown-top {
+    height: 64px;
+
+    padding: 0 15px;
+
+    gap: 8px;
+  }
+
+  .search-main-input {
+    height: 42px;
+  }
+
+
+  /* SEARCH CONTENT */
+
+  .search-content {
+    display: block;
+
+    min-height: auto;
+  }
+
+
+  /* LEFT */
+
+  .search-left {
+    padding: 22px 18px;
+
+    border-right: none;
+
+    border-bottom: 1px solid #eee;
+  }
+
+  .search-section {
+    margin-bottom: 25px;
+  }
+
+
+  /* RIGHT */
+
+  .search-right {
+    padding: 22px 18px;
+  }
+
+
+  /* PRODUCTS */
+
+  .search-products {
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 14px;
+  }
+
+  .search-product-image {
+    height: 220px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   400px AND BELOW
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .navbar-inner {
+    padding: 0 8px;
+  }
+
+  .navbar-logo img {
+    width: 90px;
+  }
+
+  .navbar-actions {
+    gap: 0;
+  }
+
+  .nav-search,
+  .nav-icon {
+    width: 27px;
+  }
+
+  .mobile-menu-btn {
+    width: 31px;
+
+    margin-left: 2px;
+  }
+
+  .search-products {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+  }
+
+  .search-product-image {
+    height: 190px;
+  }
+}
+
+
+/* =========================================================
+   PREVENT HORIZONTAL SCROLL
+========================================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: hidden;
+}

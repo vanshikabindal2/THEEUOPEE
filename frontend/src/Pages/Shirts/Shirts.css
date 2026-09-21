@@ -1,0 +1,360 @@
+
+/* ================================
+   SHIRTS PAGE
+================================ */
+
+.shirts-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+
+/* ================================
+   PRODUCTS SECTION
+================================ */
+
+.shirts-products {
+  width: 100%;
+  padding: 55px 5% 80px;
+}
+
+
+/* ================================
+   HEADING
+================================ */
+
+.shirts-heading {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.shirts-heading h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.shirts-heading p {
+  margin: 10px 0 0;
+  color: #777777;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+/* ================================
+   PRODUCTS GRID
+================================ */
+
+.products-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px 20px;
+}
+
+
+/* ================================
+   PRODUCT CARD
+================================ */
+
+.product-card {
+  width: 100%;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+
+/* ================================
+   PRODUCT IMAGE
+================================ */
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 0.78;
+  position: relative;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.035);
+}
+
+
+/* ================================
+   ICON BUTTONS
+================================ */
+
+.quick-heart,
+.quick-cart {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #172033;
+
+  cursor: pointer;
+  z-index: 5;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+
+/* ================================
+   HEART - TOP RIGHT
+================================ */
+
+.quick-heart {
+  top: 14px;
+  right: 14px;
+}
+
+
+/* ================================
+   SHOPPING BAG - BOTTOM RIGHT
+================================ */
+
+.quick-cart {
+  right: 14px;
+  bottom: 14px;
+}
+
+
+/* ================================
+   ICON HOVER
+================================ */
+
+.quick-heart:hover,
+.quick-cart:hover {
+  background: #172033;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+
+/* ================================
+   PRODUCT INFO
+================================ */
+
+/* .product-info {
+  padding: 14px 2px 0;
+}
+
+.product-info h3 {
+  margin: 0;
+  color: #172033;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.price-row {
+  margin-top: 6px;
+}
+
+.product-price {
+  color: #172033;
+  font-size: 14px;
+  font-weight: 600;
+} */
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 1024px) {
+
+  .shirts-products {
+    padding: 45px 4% 70px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 16px;
+  }
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 768px) {
+
+  .shirts-products {
+    padding: 35px 16px 60px;
+  }
+
+  .shirts-heading {
+    margin-bottom: 28px;
+  }
+
+  .shirts-heading h1 {
+    font-size: 27px;
+    letter-spacing: 1.5px;
+  }
+
+  .shirts-heading p {
+    font-size: 13px;
+    margin-top: 7px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
+  }
+
+  .product-image {
+    aspect-ratio: 0.76;
+  }
+
+  .quick-heart,
+  .quick-cart {
+    width: 34px;
+    height: 34px;
+  }
+
+  .quick-heart {
+    top: 10px;
+    right: 10px;
+  }
+
+  .quick-cart {
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .quick-heart svg,
+  .quick-cart svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .product-info {
+    padding-top: 10px;
+  }
+
+  .product-info h3 {
+    font-size: 13px;
+  }
+
+  .product-price {
+    font-size: 13px;
+  }
+}
+
+
+/* ================================
+   SMALL MOBILE
+================================ */
+
+@media (max-width: 480px) {
+
+  .shirts-products {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .products-grid {
+    gap: 20px 10px;
+  }
+
+  .quick-heart,
+  .quick-cart {
+    width: 32px;
+    height: 32px;
+  }
+
+  .quick-heart {
+    top: 8px;
+    right: 8px;
+  }
+
+  .quick-cart {
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .quick-heart svg,
+  .quick-cart svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ================================
+   PRODUCT INFO
+================================ */
+
+.product-info {
+  width: 100%;
+  padding: 14px 2px 0;
+}
+
+.product-info-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* PRODUCT NAME */
+.product-info-row h3 {
+  margin: 0;
+  padding: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+
+  color: #172033;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* PRICE */
+.product-info-row .product-price {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: max-content !important;
+  min-width: max-content !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #172033;
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  flex: 0 0 auto !important;
+}

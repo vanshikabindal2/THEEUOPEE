@@ -1,0 +1,316 @@
+/* =========================================================
+   FASHION HERO
+========================================================= */
+
+.footerr-fashion-hero {
+  position: relative;
+
+  width: 100%;
+
+  /* IMPORTANT:
+     Hero image ke according apni height lega */
+  height: auto;
+  min-height: 0;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BACKGROUND IMAGE
+========================================================= */
+
+.footerr-background-image {
+  position: relative;
+
+  width: 100%;
+  height: auto;
+
+  display: block;
+
+  margin: 0;
+  padding: 0;
+
+  object-fit: contain;
+
+  object-position: center center;
+
+  z-index: 0;
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.footerr-image-overlay {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+ 
+}
+
+
+/* =========================================================
+   EXPLORE BUTTON
+========================================================= */
+
+.footerr-explore-btn {
+  position: absolute;
+
+  z-index: 3;
+
+  left: 6.5%;
+  bottom: 60px;
+
+  min-width: 220px;
+  height: 58px;
+
+  padding: 0 25px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  box-sizing: border-box;
+
+  background: #eee6da;
+
+  color: #111;
+
+  text-decoration: none;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.18);
+
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.footerr-explore-btn:hover {
+  background: #ffffff;
+
+  color: #111111;
+
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.28);
+}
+
+
+.footerr-explore-btn svg {
+  flex-shrink: 0;
+
+  transition: transform 0.35s ease;
+}
+
+
+.footerr-explore-btn:hover svg {
+  transform: translate(4px, -4px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .footerr-fashion-hero {
+    height: auto;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .footerr-background-image {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+  }
+
+  .footerr-explore-btn {
+    left: 6%;
+
+    bottom: 35px;
+
+    min-width: 205px;
+    height: 54px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .footerr-fashion-hero {
+    height: auto;
+    min-height: 0;
+
+    padding: 0;
+  }
+
+  .footerr-background-image {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    object-position: center center;
+  }
+
+  .footerr-explore-btn {
+    left: 7%;
+
+    bottom: 25px;
+
+    min-width: 200px;
+
+    height: 53px;
+
+    padding: 0 21px;
+
+    gap: 14px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE SMALL
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .footerr-fashion-hero {
+    width: 100%;
+
+    height: auto;
+    min-height: 0;
+
+    padding: 0;
+  }
+
+  .footerr-background-image {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    /*
+      IMPORTANT:
+      Mobile par image crop nahi hogi.
+      Original aspect ratio maintain rahega.
+    */
+    object-position: center center;
+  }
+
+  .footerr-explore-btn {
+    left: 7%;
+
+    bottom: 18px;
+
+    width: 185px;
+    min-width: 185px;
+
+    height: 50px;
+
+    padding: 0 18px;
+
+    gap: 12px;
+
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .footerr-fashion-hero {
+    height: auto;
+    min-height: 0;
+  }
+
+  .footerr-background-image {
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+  }
+
+  .footerr-explore-btn {
+    left: 6%;
+
+    bottom: 15px;
+
+    width: 175px;
+    min-width: 175px;
+
+    height: 47px;
+
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .footerr-background-image,
+  .footerr-explore-btn,
+  .footerr-explore-btn svg {
+    transition: none !important;
+  }
+}

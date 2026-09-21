@@ -1,0 +1,109 @@
+.otp-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 110px 20px 50px;
+  background: #f8f8f8;
+}
+
+.otp-box {
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  padding: 48px;
+  border: 1px solid #e8e8e8;
+  text-align: center;
+}
+
+.otp-header {
+  margin-bottom: 35px;
+}
+
+.otp-header h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.otp-header p {
+  margin: 0 0 7px;
+  color: #777;
+  font-size: 14px;
+}
+
+.otp-header strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.otp-inputs input {
+  width: 48px;
+  height: 54px;
+  border: 1px solid #dcdcdc;
+  outline: none;
+  text-align: center;
+  font-size: 20px;
+  background: #fff;
+}
+
+.otp-inputs input:focus {
+  border-color: #111;
+}
+
+.otp-box form > button {
+  width: 100%;
+  height: 54px;
+  margin-top: 25px;
+  border: none;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+}
+
+.otp-box form > button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.change-number {
+  margin-top: 20px;
+  border: none;
+  background: none;
+  color: #555;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .otp-page {
+    padding: 100px 16px 30px;
+  }
+
+  .otp-box {
+    padding: 32px 20px;
+  }
+
+  .otp-inputs {
+    gap: 6px;
+  }
+
+  .otp-inputs input {
+    width: 43px;
+    height: 50px;
+  }
+}

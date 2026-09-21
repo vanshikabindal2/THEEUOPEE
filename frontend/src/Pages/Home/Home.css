@@ -1,0 +1,473 @@
+/* =========================================
+   PREMIUM FASHION HERO SLIDER
+========================================= */
+
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 167px);
+  min-height: 550px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+
+/* =========================================
+   SLIDE
+========================================= */
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 1.2s ease,
+    visibility 1.2s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* =========================================
+   HERO IMAGE
+========================================= */
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: top center;
+
+  transform: scale(1.06);
+
+  transition:
+    transform 6s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.hero-slide.active .hero-image {
+  transform: scale(1);
+}
+
+
+/* =========================================
+   SLIDER ARROWS
+========================================= */
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  z-index: 10;
+
+  width: 52px;
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.slider-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+
+
+.slider-prev {
+  left: 28px;
+}
+
+.slider-next {
+  right: 28px;
+}
+
+
+/* =========================================
+   SLIDER DOTS
+========================================= */
+
+.slider-dots {
+  position: absolute;
+
+  left: 50%;
+  bottom: 28px;
+
+  transform: translateX(-50%);
+
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.slider-dots button {
+  width: 7px;
+  height: 7px;
+
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  cursor: pointer;
+
+  transition:
+    width 0.35s ease,
+    background 0.35s ease,
+    transform 0.35s ease;
+}
+
+.slider-dots button:hover {
+  transform: scale(1.3);
+}
+
+.slider-dots button.active {
+  width: 30px;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1024px) {
+
+  .hero-slider {
+    width: 100%;
+    height: 600px;
+    min-height: 0;
+  }
+
+  .hero-image {
+    object-position: center center;
+  }
+
+  .slider-arrow {
+    width: 46px;
+    height: 46px;
+  }
+
+  .slider-arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .slider-prev {
+    left: 20px;
+  }
+
+  .slider-next {
+    right: 20px;
+  }
+
+  .slider-dots {
+    bottom: 22px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .hero-slider {
+    position: relative;
+
+    width: 100%;
+
+    /*
+      Banner ko mobile width ke according
+      proportional height milegi.
+    */
+    height: 56.25vw;
+
+    min-height: 0;
+
+    overflow: hidden;
+
+    background: #f5f5f5;
+  }
+
+
+  .hero-slide {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    /*
+      Full width fill karega.
+      Side white gap nahi aayega.
+    */
+    object-fit: cover;
+
+    /*
+      Center rakha hai taaki
+      top unnecessarily crop na ho.
+    */
+    object-position: center center;
+
+    /*
+      Mobile par zoom hata diya.
+    */
+    transform: none !important;
+
+    transition: opacity 1s ease;
+  }
+
+  .hero-slide.active .hero-image {
+    transform: none !important;
+  }
+
+
+  /* =====================================
+     MOBILE ARROWS
+  ===================================== */
+
+  .slider-arrow {
+    width: 40px;
+    height: 40px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .slider-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .slider-arrow:hover {
+    transform: translateY(-50%);
+  }
+
+  .slider-prev {
+    left: 10px;
+  }
+
+  .slider-next {
+    right: 10px;
+  }
+
+
+  /* =====================================
+     MOBILE DOTS
+  ===================================== */
+
+  .slider-dots {
+    bottom: 12px;
+    gap: 7px;
+  }
+
+  .slider-dots button {
+    width: 6px;
+    height: 6px;
+  }
+
+  .slider-dots button.active {
+    width: 22px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .hero-slider {
+    /*
+      56.25vw = 16:9 ratio
+      Full width + no side gap
+    */
+    height: 56.25vw;
+
+    min-height: 0;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center center;
+  }
+
+
+  .slider-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .slider-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .slider-prev {
+    left: 7px;
+  }
+
+  .slider-next {
+    right: 7px;
+  }
+
+  .slider-dots {
+    bottom: 9px;
+  }
+}
+
+
+/* =========================================
+   OFFER TICKER
+========================================= */
+
+.offer-ticker {
+  width: 100%;
+  height: 52px;
+
+  overflow: hidden;
+
+  background: #171717;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   OFFER TRACK
+========================================= */
+
+.offer-track {
+  display: flex;
+  align-items: center;
+
+  gap: 45px;
+
+  width: max-content;
+
+  animation: offerMove 22s linear infinite;
+}
+
+.offer-track span {
+  font-size: 12px;
+  font-weight: 500;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.offer-track span:nth-child(even) {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+
+/* =========================================
+   OFFER ANIMATION
+========================================= */
+
+@keyframes offerMove {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+/* =========================================
+   PAUSE ON HOVER
+========================================= */
+
+.offer-ticker:hover .offer-track {
+  animation-play-state: paused;
+}
+
+
+/* =========================================
+   OFFER — MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .offer-ticker {
+    width: 100%;
+    height: 45px;
+  }
+
+  .offer-track {
+    gap: 30px;
+
+    animation-duration: 18s;
+  }
+
+  .offer-track span {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  .offer-track span:nth-child(even) {
+    font-size: 9px;
+  }
+}

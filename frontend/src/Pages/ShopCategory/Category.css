@@ -1,0 +1,388 @@
+/* =========================================
+   HERO BANNER
+========================================= */
+
+.hero-banner {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.hero-banner-image {
+  width: 100%;
+  height: 60%;
+  display: block;
+  object-fit: cover;
+}
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media (min-width: 1200px) {
+  .hero-banner-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 991px) {
+  .hero-banner-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .hero-banner {
+    width: 100%;
+  }
+
+  .hero-banner-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+/* category slider */
+/* =====================================================
+   CATEGORY PAGE
+===================================================== */
+
+.category-page {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+
+/* =====================================================
+   HERO BANNER
+===================================================== */
+
+.hero-banner {
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+/* =====================================================
+   SLIDER SECTION
+===================================================== */
+
+.category-slider-section {
+  width: 100%;
+  padding: 35px 6px 0;
+  background: #ffffff;
+}
+
+
+/* =====================================================
+   SLIDER WRAPPER
+===================================================== */
+
+.category-slider-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+
+/* =====================================================
+   VIEWPORT
+===================================================== */
+
+.category-slider-viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+
+/* =====================================================
+   TRACK
+===================================================== */
+
+.category-slider-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+
+
+/* =====================================================
+   CATEGORY CARD
+===================================================== */
+
+.category-card {
+  position: relative;
+  height: 780px;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   IMAGE
+===================================================== */
+
+.category-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 0.8s ease;
+}
+
+
+/* =====================================================
+   IMAGE HOVER
+===================================================== */
+
+.category-card:hover .category-image {
+  transform: scale(1.045);
+}
+
+
+/* =====================================================
+   DARK GRADIENT
+===================================================== */
+
+.category-overlay {
+  position: absolute;
+  inset: 0;
+
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.category-title {
+  position: absolute;
+
+  left: 50%;
+  bottom: 48px;
+
+  transform: translateX(-50%);
+
+  width: 90%;
+  margin: 0;
+
+  color: #ffffff;
+
+  text-align: center;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 38px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.45);
+
+  z-index: 2;
+}
+
+
+/* =====================================================
+   ARROWS
+===================================================== */
+
+.category-arrow {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  color: #222222;
+
+  font-size: 34px;
+  font-weight: 300;
+
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =====================================================
+   ARROW HOVER
+===================================================== */
+
+.category-arrow:hover {
+  background: #ffffff;
+
+  transform:
+    translateY(-50%)
+    scale(1.08);
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =====================================================
+   LEFT ARROW
+===================================================== */
+
+.category-arrow-left {
+  left: 16px;
+}
+
+
+/* =====================================================
+   RIGHT ARROW
+===================================================== */
+
+.category-arrow-right {
+  right: 16px;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 991px) {
+
+  .category-slider-section {
+    padding: 28px 4px 0;
+  }
+
+  .category-card {
+    height: 700px;
+  }
+
+  .category-title {
+    font-size: 32px;
+    bottom: 42px;
+  }
+
+  .category-arrow {
+    width: 44px;
+    height: 44px;
+    font-size: 30px;
+  }
+
+  .category-arrow-left {
+    left: 12px;
+  }
+
+  .category-arrow-right {
+    right: 12px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .category-slider-section {
+    padding: 20px 0 0;
+  }
+
+  .category-card {
+    height: 680px;
+  }
+
+  .category-title {
+    font-size: 28px;
+    bottom: 32px;
+    width: 92%;
+  }
+
+  .category-arrow {
+    width: 38px;
+    height: 38px;
+
+    font-size: 27px;
+  }
+
+  .category-arrow-left {
+    left: 8px;
+  }
+
+  .category-arrow-right {
+    right: 8px;
+  }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .category-card {
+    height: 620px;
+  }
+
+  .category-title {
+    font-size: 25px;
+    bottom: 28px;
+  }
+
+  .category-arrow {
+    width: 35px;
+    height: 35px;
+
+    font-size: 25px;
+  }
+}
