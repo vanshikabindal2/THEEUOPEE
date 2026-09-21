@@ -146,7 +146,7 @@ export const verifyOtp = async (req, res) => {
         {
           userId: user._id,
         },
-        process.env.JWT_SECERT,
+        process.env.JWT_SECRET,
         {
           expiresIn: "7d",
         }
