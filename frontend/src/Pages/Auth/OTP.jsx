@@ -19,6 +19,7 @@ const OTP = () => {
   ]);
 
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
 
   const inputs = useRef([]);
 
@@ -48,6 +49,7 @@ const OTP = () => {
 
     setOtp(newOtp);
 
+    // Move to next input
     if (value && index < 5) {
       inputs.current[index + 1]?.focus();
     }
@@ -107,7 +109,18 @@ const OTP = () => {
         // MSG91 SUCCESS
         // =================================
         async (data) => {
-          console.log("MSG91 OTP verification successful");
+          console.log(
+            "========== MSG91 OTP VERIFY SUCCESS =========="
+          );
+
+          console.log(
+            "Full MSG91 verification response:",
+            data
+          );
+
+          console.log(
+            "=============================================="
+          );
 
           /*
             MSG91 response generally contains:
@@ -116,8 +129,6 @@ const OTP = () => {
               message: "ACCESS_TOKEN",
               type: "success"
             }
-
-            We take the access token from message.
           */
 
           const accessToken = data?.message;
@@ -173,9 +184,20 @@ const OTP = () => {
             const backendData =
               await response.json();
 
-            // =================================
-            // SAFE DEBUG LOG
-            // =================================
+            console.log(
+              "========== BACKEND OTP RESPONSE =========="
+            );
+
+            console.log(
+              "FULL BACKEND RESPONSE:",
+              backendData
+            );
+
+            console.log(
+              "HTTP STATUS:",
+              response.status
+            );
+
             console.log(
               "Backend verification success:",
               backendData.success
@@ -194,6 +216,10 @@ const OTP = () => {
             console.log(
               "User received:",
               Boolean(backendData.user)
+            );
+
+            console.log(
+              "=========================================="
             );
 
             // =================================
@@ -238,7 +264,6 @@ const OTP = () => {
             // =================================
             // EXISTING USER
             // =================================
-
             if (!backendData.token) {
               console.error(
                 "Backend did not return JWT token."
@@ -316,8 +341,16 @@ const OTP = () => {
         // =================================
         (error) => {
           console.error(
-            "MSG91 OTP verification failed:",
+            "========== MSG91 OTP VERIFY ERROR =========="
+          );
+
+          console.error(
+            "Full verification error:",
             error
+          );
+
+          console.error(
+            "============================================"
           );
 
           alert(
@@ -345,35 +378,97 @@ const OTP = () => {
   // RESEND OTP
   // =================================
   const handleResendOtp = () => {
+    // Prevent multiple clicks
+    if (resending) {
+      return;
+    }
+
+    // Check MSG91 retry function
     if (
       typeof window.retryOtp !== "function"
     ) {
       alert(
-        "MSG91 OTP service is not ready."
+        "MSG91 OTP service is not ready. Please refresh the page."
+      );
+
+      console.error(
+        "MSG91 retryOtp function not found"
       );
 
       return;
     }
 
+    console.log(
+      "========== RESENDING OTP =========="
+    );
+
+    console.log(
+      "Phone:",
+      phone
+    );
+
+    console.log(
+      "retryOtp function:",
+      typeof window.retryOtp
+    );
+
+    console.log(
+      "==================================="
+    );
+
+    setResending(true);
+
+    // =================================
+    // MSG91 RETRY OTP
+    // =================================
     window.retryOtp(
       "11",
 
+      // =================================
+      // SUCCESS
+      // =================================
       (data) => {
         console.log(
-          "OTP resent successfully"
+          "========== RESEND OTP RESPONSE =========="
         );
 
-        alert("OTP sent again");
+        console.log(
+          "Full MSG91 resend response:",
+          data
+        );
+
+        console.log(
+          "========================================="
+        );
+
+        setResending(false);
+
+        alert(
+          "OTP resend request successful. Please check your SMS."
+        );
       },
 
+      // =================================
+      // ERROR
+      // =================================
       (error) => {
         console.error(
-          "Resend OTP error:",
+          "========== RESEND OTP ERROR =========="
+        );
+
+        console.error(
+          "Full MSG91 resend error:",
           error
         );
 
+        console.error(
+          "======================================"
+        );
+
+        setResending(false);
+
         alert(
-          "Unable to resend OTP"
+          "Unable to resend OTP. Please try again."
         );
       }
     );
@@ -387,6 +482,9 @@ const OTP = () => {
 
       <div className="otp-box">
 
+        {/* ================================
+            OTP HEADER
+        ================================= */}
         <div className="otp-header">
 
           <h1>
@@ -403,6 +501,9 @@ const OTP = () => {
 
         </div>
 
+        {/* ================================
+            OTP FORM
+        ================================= */}
         <form onSubmit={handleVerify}>
 
           <div className="otp-inputs">
@@ -417,6 +518,7 @@ const OTP = () => {
                 inputMode="numeric"
                 maxLength={1}
                 value={value}
+                autoComplete="one-time-code"
                 onChange={(e) =>
                   handleChange(
                     e.target.value,
@@ -434,9 +536,12 @@ const OTP = () => {
 
           </div>
 
+          {/* ================================
+              VERIFY BUTTON
+          ================================= */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || resending}
           >
             {loading
               ? "VERIFYING..."
@@ -449,21 +554,30 @@ const OTP = () => {
 
         </form>
 
+        {/* ================================
+            RESEND OTP
+        ================================= */}
         <button
           type="button"
           className="resend-otp"
           onClick={handleResendOtp}
-          disabled={loading}
+          disabled={loading || resending}
         >
-          RESEND OTP
+          {resending
+            ? "RESENDING OTP..."
+            : "RESEND OTP"}
         </button>
 
+        {/* ================================
+            CHANGE NUMBER
+        ================================= */}
         <button
           type="button"
           className="change-number"
           onClick={() =>
             navigate("/login")
           }
+          disabled={loading || resending}
         >
           CHANGE PHONE NUMBER
         </button>

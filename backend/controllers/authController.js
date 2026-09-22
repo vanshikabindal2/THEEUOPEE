@@ -33,8 +33,6 @@ export const sendOtp = async (req, res) => {
     // =================================
     // MSG91 OTP WIDGET
     // =================================
-    // OTP actually MSG91 frontend widget se send hoga.
-    // Backend sirf normalized phone frontend ko return karega.
 
     return res.status(200).json({
       success: true,
@@ -68,6 +66,7 @@ export const verifyOtp = async (req, res) => {
     // =================================
     // NORMALIZE PHONE
     // =================================
+
     let normalizedPhone = phone.replace(/\D/g, "");
 
     if (normalizedPhone.length === 10) {
@@ -114,7 +113,6 @@ export const verifyOtp = async (req, res) => {
       });
     }
 
-    // MSG91 must confirm successful verification
     if (
       msg91Data.type &&
       msg91Data.type !== "success"
@@ -129,18 +127,37 @@ export const verifyOtp = async (req, res) => {
     // CHECK USER
     // =================================
 
-    let user = await User.findOne({
+    const user = await User.findOne({
       phone: normalizedPhone,
     });
+
+    console.log("Normalized phone:", normalizedPhone);
+    console.log("Existing user:", Boolean(user));
+    console.log(
+      "JWT secret exists:",
+      Boolean(process.env.JWT_SECRET)
+    );
 
     // =================================
     // EXISTING USER
     // =================================
 
     if (user) {
-      user.phoneVerified = true;
+      // Only update phone verification.
+      // Using updateOne avoids validating old
+      // invalid/empty enum fields like gender.
+      await User.updateOne(
+        { _id: user._id },
+        {
+          $set: {
+            phoneVerified: true,
+          },
+        }
+      );
 
-      await user.save();
+      // =================================
+      // CREATE JWT
+      // =================================
 
       const token = jwt.sign(
         {
@@ -162,6 +179,7 @@ export const verifyOtp = async (req, res) => {
           name: user.name,
           email: user.email,
           phone: user.phone,
+          gender: user.gender,
         },
       });
     }
@@ -191,7 +209,16 @@ export const verifyOtp = async (req, res) => {
 // =================================
 export const completeProfile = async (req, res) => {
   try {
-    const { name, email, phone } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      gender,
+    } = req.body;
+
+    // =================================
+    // REQUIRED FIELDS
+    // =================================
 
     if (!name || !email || !phone) {
       return res.status(400).json({
@@ -237,7 +264,7 @@ export const completeProfile = async (req, res) => {
     // =================================
 
     const existingEmail = await User.findOne({
-      email: email.toLowerCase(),
+      email: email.toLowerCase().trim(),
     });
 
     if (existingEmail) {
@@ -248,15 +275,26 @@ export const completeProfile = async (req, res) => {
     }
 
     // =================================
-    // CREATE USER
+    // CREATE USER DATA
     // =================================
 
-    const user = await User.create({
+    const userData = {
       name: name.trim(),
       email: email.toLowerCase().trim(),
       phone: normalizedPhone,
       phoneVerified: true,
-    });
+    };
+
+    // Only add gender if user selected it
+    if (gender) {
+      userData.gender = gender;
+    }
+
+    // =================================
+    // CREATE USER
+    // =================================
+
+    const user = await User.create(userData);
 
     // =================================
     // CREATE OUR JWT
@@ -272,6 +310,10 @@ export const completeProfile = async (req, res) => {
       }
     );
 
+    // =================================
+    // RESPONSE
+    // =================================
+
     return res.status(201).json({
       success: true,
       message: "Account created successfully",
@@ -281,6 +323,7 @@ export const completeProfile = async (req, res) => {
         name: user.name,
         email: user.email,
         phone: user.phone,
+        gender: user.gender,
       },
     });
   } catch (error) {

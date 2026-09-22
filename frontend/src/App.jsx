@@ -17,6 +17,10 @@ import Scroll from './components/Scroll/Scroll.js'
 import Login from "./Pages/Auth/Login";
 import OTP from "./Pages/Auth/OTP";
 import Profile from "./Pages/Auth/Profile";
+import CompleteProfile from "./Pages/Auth/CompleteProfile.jsx";
+import PersonalInfo from "./Pages/Auth/PersonalInfo.jsx";
+import SavedAddress from "./Pages/Auth/SavedAddress.jsx";
+import AddAddress from "./Pages/Auth/AddAddress";
 const App = () => {
   return (
     <>
@@ -49,8 +53,14 @@ const App = () => {
                     <Route path="/trouser" element={<Pant />} />
                    <Route path="/login" element={<Login />} />
                     <Route path="/verify-otp" element={<OTP />} />
-                    <Route path="/complete-profile" element={<Profile/>} />
-
+                    <Route path="/complete-profile" element={<CompleteProfile/>} />
+                    <Route path='/personal-information' element={<PersonalInfo/>}/>
+                    <Route path='/profile' element={<Profile/>}/>
+<Route path="/addresses" element={<SavedAddress />} />
+<Route
+  path="/addresses/add"
+  element={<AddAddress />}
+/>
       </Routes>
 </div>
       <Footer />

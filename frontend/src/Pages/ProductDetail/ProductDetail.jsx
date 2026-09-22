@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -35,9 +34,36 @@ const ProductDetail = () => {
 
   const [quantity, setQuantity] = useState(1);
 
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  /* =========================
+     WISHLIST STATE
+  ========================= */
 
-  const [openSection, setOpenSection] = useState(null);
+  const [isWishlisted, setIsWishlisted] = useState(() => {
+    if (!product?._id) {
+      return false;
+    }
+
+    try {
+      const savedWishlist =
+        JSON.parse(
+          localStorage.getItem("wishlist")
+        ) || [];
+
+      return savedWishlist.includes(
+        product._id
+      );
+    } catch (error) {
+      console.error(
+        "Wishlist read error:",
+        error
+      );
+
+      return false;
+    }
+  });
+
+  const [openSection, setOpenSection] =
+    useState(null);
 
   const [isAddingToCart, setIsAddingToCart] =
     useState(false);
@@ -51,7 +77,9 @@ const ProductDetail = () => {
       <div className="product-not-found">
         <h2>Product not found</h2>
 
-        <button onClick={() => navigate("/shop")}>
+        <button
+          onClick={() => navigate("/shop")}
+        >
           Back to Shop
         </button>
       </div>
@@ -79,19 +107,16 @@ const ProductDetail = () => {
   ========================= */
 
   const handleAddToCart = async () => {
-    // Size check
     if (!selectedSize) {
       alert("Please select a size");
       return;
     }
 
-    // Stock check
     if (!product.stock || product.stock <= 0) {
       alert("Product is out of stock");
       return;
     }
 
-    // Quantity check
     if (quantity > product.stock) {
       alert(
         `Only ${product.stock} items are available`
@@ -99,12 +124,14 @@ const ProductDetail = () => {
       return;
     }
 
-    // Get OTP login JWT token
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("token");
 
-    console.log("Logged-in token:", token);
+    console.log(
+      "Logged-in token:",
+      token
+    );
 
-    // User is not logged in
     if (!token) {
       alert(
         "Please login first to add products to cart"
@@ -143,36 +170,24 @@ const ProductDetail = () => {
         data
       );
 
-      /* =========================
-         SUCCESS
-      ========================= */
-
       if (data.success) {
         alert(
           `${product.name} added to cart`
         );
 
-        // Update navbar cart count
         window.dispatchEvent(
           new Event("cartUpdated")
         );
 
-        // Reset quantity
         setQuantity(1);
-      }
-
-      /* =========================
-         ERROR FROM BACKEND
-      ========================= */
-
-      else {
-        // Token expired/invalid
+      } else {
         if (
           data.message
             ?.toLowerCase()
             .includes("token")
         ) {
           localStorage.removeItem("token");
+          localStorage.removeItem("user");
 
           alert(
             "Your login session has expired. Please login again."
@@ -222,11 +237,15 @@ const ProductDetail = () => {
       return product.closure;
     }
 
-    if (product.subCategory === "Jogger") {
+    if (
+      product.subCategory === "Jogger"
+    ) {
       return "Drawstring";
     }
 
-    if (product.subCategory === "pant") {
+    if (
+      product.subCategory === "pant"
+    ) {
       return "Button & Zip";
     }
 
@@ -268,7 +287,95 @@ const ProductDetail = () => {
   ========================= */
 
   const handleWishlist = () => {
-    setIsWishlisted((prev) => !prev);
+    if (!product?._id) {
+      console.log(
+        "Product ID not found"
+      );
+      return;
+    }
+
+    let savedWishlist = [];
+
+    try {
+      savedWishlist =
+        JSON.parse(
+          localStorage.getItem("wishlist")
+        ) || [];
+    } catch (error) {
+      console.error(
+        "Wishlist parse error:",
+        error
+      );
+
+      savedWishlist = [];
+    }
+
+    let updatedWishlist;
+
+    /* =========================
+       REMOVE
+    ========================= */
+
+    if (
+      savedWishlist.includes(
+        product._id
+      )
+    ) {
+      updatedWishlist =
+        savedWishlist.filter(
+          (item) =>
+            item !== product._id
+        );
+
+      setIsWishlisted(false);
+
+      console.log(
+        "Removed from wishlist:",
+        product._id
+      );
+    }
+
+    /* =========================
+       ADD
+    ========================= */
+
+    else {
+      updatedWishlist = [
+        ...savedWishlist,
+        product._id,
+      ];
+
+      setIsWishlisted(true);
+
+      console.log(
+        "Added to wishlist:",
+        product._id
+      );
+    }
+
+    /* =========================
+       SAVE
+    ========================= */
+
+    localStorage.setItem(
+      "wishlist",
+      JSON.stringify(updatedWishlist)
+    );
+
+    console.log(
+      "Wishlist saved:",
+      JSON.stringify(
+        updatedWishlist
+      )
+    );
+
+    /* =========================
+       UPDATE OTHER COMPONENTS
+    ========================= */
+
+    window.dispatchEvent(
+      new Event("wishlistUpdated")
+    );
   };
 
   /* =========================
@@ -306,7 +413,9 @@ const ProductDetail = () => {
 
             <img
               src={
-                Array.isArray(product.image)
+                Array.isArray(
+                  product.image
+                )
                   ? product.image[0]
                   : product.image
               }
@@ -330,12 +439,18 @@ const ProductDetail = () => {
           <div className="product-title-row">
 
             <div>
-              <h1>{product.name}</h1>
+
+              <h1>
+                {product.name}
+              </h1>
 
               <p className="product-category">
                 {product.subCategory}
               </p>
+
             </div>
+
+            {/* WISHLIST BUTTON */}
 
             <button
               type="button"
@@ -345,8 +460,13 @@ const ProductDetail = () => {
                   : ""
               }`}
               onClick={handleWishlist}
-              aria-label="Add to wishlist"
+              aria-label={
+                isWishlisted
+                  ? "Remove from wishlist"
+                  : "Add to wishlist"
+              }
             >
+
               <Heart
                 size={23}
                 fill={
@@ -355,6 +475,7 @@ const ProductDetail = () => {
                     : "none"
                 }
               />
+
             </button>
 
           </div>
@@ -364,10 +485,12 @@ const ProductDetail = () => {
           ========================= */}
 
           <div className="product-price">
+
             ₹
             {Number(
               product.price
             ).toLocaleString("en-IN")}
+
           </div>
 
           {/* =========================
@@ -375,8 +498,10 @@ const ProductDetail = () => {
           ========================= */}
 
           <p className="short-description">
+
             {product.description ||
               "Premium quality product."}
+
           </p>
 
           {/* =========================
@@ -448,6 +573,7 @@ const ProductDetail = () => {
 
               {product.sizes?.map(
                 (size) => (
+
                   <button
                     type="button"
                     key={size}
@@ -464,6 +590,7 @@ const ProductDetail = () => {
                   >
                     {size}
                   </button>
+
                 )
               )}
 
@@ -476,8 +603,10 @@ const ProductDetail = () => {
           ========================= */}
 
           <div className="delivery-message">
+
             FREE 1-2 day delivery on
             5k+ pincodes
+
           </div>
 
           {/* =========================
@@ -542,11 +671,13 @@ const ProductDetail = () => {
           >
 
             <span>
+
               {isAddingToCart
                 ? "ADDING..."
                 : product.stock <= 0
                 ? "OUT OF STOCK"
                 : "ADD TO CART"}
+
             </span>
 
             {!isAddingToCart &&
@@ -576,9 +707,7 @@ const ProductDetail = () => {
 
           <div className="product-info-sections">
 
-            {/* =========================
-                DESCRIPTION & DETAILS
-            ========================= */}
+            {/* DESCRIPTION */}
 
             <div className="info-accordion">
 
@@ -597,19 +726,23 @@ const ProductDetail = () => {
                 </span>
 
                 <span className="accordion-icon">
+
                   {openSection ===
                   "description"
                     ? "−"
                     : "+"}
+
                 </span>
 
               </button>
 
               {openSection ===
                 "description" && (
+
                 <div className="info-content">
 
                   <div className="detail-row">
+
                     <span>
                       Description
                     </span>
@@ -618,75 +751,108 @@ const ProductDetail = () => {
                       {product.description ||
                         "Premium quality product."}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Fit</span>
+
+                    <span>
+                      Fit
+                    </span>
 
                     <span>
                       {product.fit ||
                         "Regular Fit"}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Fabric</span>
+
+                    <span>
+                      Fabric
+                    </span>
 
                     <span>
                       {product.fabric ||
                         "Premium Fabric"}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Pattern</span>
+
+                    <span>
+                      Pattern
+                    </span>
 
                     <span>
                       {product.pattern ||
                         "Solid"}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Closure</span>
+
+                    <span>
+                      Closure
+                    </span>
 
                     <span>
                       {getClosure()}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Sleeves</span>
+
+                    <span>
+                      Sleeves
+                    </span>
 
                     <span>
                       {getSleeves()}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Pocket</span>
+
+                    <span>
+                      Pocket
+                    </span>
 
                     <span>
                       {product.pocket ||
                         "Yes"}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Collar</span>
+
+                    <span>
+                      Collar
+                    </span>
 
                     <span>
                       {getCollar()}
                     </span>
+
                   </div>
 
                   <div className="detail-row">
-                    <span>Colour</span>
+
+                    <span>
+                      Colour
+                    </span>
 
                     <span>
                       {product.color ||
                         "Classic"}
                     </span>
+
                   </div>
 
                 </div>
@@ -694,9 +860,7 @@ const ProductDetail = () => {
 
             </div>
 
-            {/* =========================
-                MATERIAL & CARE
-            ========================= */}
+            {/* MATERIAL & CARE */}
 
             <div className="info-accordion">
 
@@ -715,16 +879,19 @@ const ProductDetail = () => {
                 </span>
 
                 <span className="accordion-icon">
+
                   {openSection ===
                   "material"
                     ? "−"
                     : "+"}
+
                 </span>
 
               </button>
 
               {openSection ===
                 "material" && (
+
                 <div className="info-content">
 
                   <div className="care-section">
@@ -788,9 +955,7 @@ const ProductDetail = () => {
 
             </div>
 
-            {/* =========================
-                RETURN & EXCHANGE
-            ========================= */}
+            {/* RETURN & EXCHANGE */}
 
             <div className="info-accordion">
 
@@ -809,16 +974,19 @@ const ProductDetail = () => {
                 </span>
 
                 <span className="accordion-icon">
+
                   {openSection ===
                   "return"
                     ? "−"
                     : "+"}
+
                 </span>
 
               </button>
 
               {openSection ===
                 "return" && (
+
                 <div className="info-content">
 
                   <p>

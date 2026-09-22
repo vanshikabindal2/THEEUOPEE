@@ -1,0 +1,474 @@
+/* =========================================
+   SAVED ADDRESSES
+========================================= */
+
+.saved-address-page {
+  width: 100%;
+  min-height: calc(100vh - 78px);
+  background: #fff;
+  padding: 55px 20px 80px;
+  box-sizing: border-box;
+}
+
+.saved-address-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.saved-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border: none;
+  background: transparent;
+
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 45px;
+
+  color: #222;
+
+  transition: opacity 0.25s ease;
+}
+
+.saved-back:hover {
+  opacity: 0.55;
+}
+
+/* =========================================
+   HEADING
+========================================= */
+
+.saved-heading {
+  margin-bottom: 35px;
+}
+
+.saved-heading span {
+  display: block;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #999;
+
+  margin-bottom: 10px;
+}
+
+.saved-heading h1 {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+
+  color: #111;
+}
+
+/* =========================================
+   USER INFO
+========================================= */
+
+.saved-user-info {
+  padding: 20px 0;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+
+  margin-bottom: 25px;
+}
+
+.saved-user-info h3 {
+  margin: 0 0 6px;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+}
+
+.saved-user-info p {
+  margin: 0;
+
+  font-size: 13px;
+  color: #777;
+}
+
+/* =========================================
+   ADD ADDRESS BUTTON
+========================================= */
+
+.add-address-btn {
+  width: 100%;
+  min-height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  margin-bottom: 30px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.add-address-btn:hover {
+  background: #fff;
+  color: #111;
+}
+
+/* =========================================
+   LOADING
+========================================= */
+
+.address-loading {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #999;
+}
+
+/* =========================================
+   NO ADDRESS
+========================================= */
+
+.no-address {
+  min-height: 300px;
+
+  border: 1px solid #e8e8e8;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.no-address svg {
+  color: #777;
+  margin-bottom: 18px;
+}
+
+.no-address h3 {
+  margin: 0 0 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+.no-address p {
+  margin: 0 0 22px;
+
+  font-size: 13px;
+  color: #888;
+}
+
+.no-address button {
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+
+  padding: 13px 25px;
+
+  font-size: 11px;
+  letter-spacing: 1.5px;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.no-address button:hover {
+  background: #fff;
+  color: #111;
+}
+
+/* =========================================
+   ADDRESS LIST
+========================================= */
+
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* =========================================
+   ADDRESS CARD
+========================================= */
+
+.address-card {
+  border: 1px solid #e5e5e5;
+  background: #fff;
+
+  padding: 25px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.address-card:hover {
+  border-color: #cfcfcf;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================
+   CARD TOP
+========================================= */
+
+.address-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.address-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e5e5e5;
+
+  color: #222;
+}
+
+/* =========================================
+   ADDRESS DETAILS
+========================================= */
+
+.address-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.address-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.address-name-row h3 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  color: #111;
+}
+
+.address-details p {
+  margin: 4px 0;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  color: #666;
+}
+
+/* =========================================
+   DEFAULT BADGE
+========================================= */
+
+.default-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  background: #f3f3f3;
+  color: #555;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.address-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+
+  margin-top: 22px;
+  padding-top: 17px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+.make-default {
+  border: none;
+  background: transparent;
+
+  padding: 0;
+
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+
+  color: #555;
+
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.make-default:hover {
+  color: #111;
+}
+
+.delete-address {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #e5e5e5;
+  background: #fff;
+
+  color: #555;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.delete-address:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+  .saved-address-page {
+    padding: 40px 18px 60px;
+  }
+
+  .saved-back {
+    margin-bottom: 35px;
+  }
+
+  .saved-heading h1 {
+    font-size: 25px;
+  }
+
+  .address-card {
+    padding: 20px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .saved-address-page {
+    padding: 30px 15px 50px;
+  }
+
+  .saved-back {
+    margin-bottom: 30px;
+  }
+
+  .saved-heading {
+    margin-bottom: 25px;
+  }
+
+  .saved-heading h1 {
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+
+  .saved-heading span {
+    font-size: 10px;
+  }
+
+  .saved-user-info {
+    padding: 17px 0;
+  }
+
+  .add-address-btn {
+    min-height: 50px;
+    font-size: 10px;
+  }
+
+  .address-card {
+    padding: 17px;
+  }
+
+  .address-card-top {
+    gap: 12px;
+  }
+
+  .address-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .address-name-row {
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .address-name-row h3 {
+    font-size: 14px;
+  }
+
+  .address-details p {
+    font-size: 12px;
+  }
+
+  .address-actions {
+    margin-top: 17px;
+    padding-top: 14px;
+    gap: 15px;
+  }
+
+  .make-default {
+    font-size: 9px;
+  }
+}

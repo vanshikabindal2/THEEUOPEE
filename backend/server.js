@@ -6,7 +6,7 @@ import connectDB from "./config/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
-
+import addressRoutes from "./routes/addressRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -28,7 +28,7 @@ app.use("/api/auth", authRoutes);
 
 // Cart
 app.use("/api/cart", cartRoutes);
-
+app.use("/api/address", addressRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

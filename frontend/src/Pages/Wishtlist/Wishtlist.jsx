@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Heart, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
+import {
+  Heart,
+  ShoppingBag,
+  Trash2,
+  ArrowRight,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { products } from "../../assets/assets";
@@ -8,27 +13,86 @@ import "./Wishtlist.css";
 const Wishtlist = () => {
   const navigate = useNavigate();
 
-  const [wishlist, setWishlist] = useState(() => {
-    const savedWishlist =
-      JSON.parse(localStorage.getItem("wishlist")) || [];
+  /* =========================
+     GET WISHLIST
+  ========================= */
 
-    return savedWishlist;
-  });
+  const getWishlist = () => {
+    try {
+      const savedWishlist =
+        JSON.parse(
+          localStorage.getItem("wishlist")
+        ) || [];
 
-  // =========================
-  // GET WISHLIST PRODUCTS
-  // =========================
-  const wishlistProducts = products.filter((product) =>
-    wishlist.includes(product._id)
+      // Make sure only IDs are stored
+      return Array.isArray(savedWishlist)
+        ? savedWishlist.filter(
+            (item) => typeof item === "string"
+          )
+        : [];
+    } catch (error) {
+      console.error(
+        "Wishlist localStorage error:",
+        error
+      );
+
+      return [];
+    }
+  };
+
+  const [wishlist, setWishlist] = useState(
+    getWishlist
   );
 
-  // =========================
-  // REMOVE FROM WISHLIST
-  // =========================
-  const removeFromWishlist = (id) => {
-    const updatedWishlist = wishlist.filter(
-      (item) => item !== id
+
+  useEffect(() => {
+    const updateWishlist = () => {
+      setWishlist(getWishlist());
+    };
+
+    window.addEventListener(
+      "wishlistUpdated",
+      updateWishlist
     );
+
+    window.addEventListener(
+      "storage",
+      updateWishlist
+    );
+
+    return () => {
+      window.removeEventListener(
+        "wishlistUpdated",
+        updateWishlist
+      );
+
+      window.removeEventListener(
+        "storage",
+        updateWishlist
+      );
+    };
+  }, []);
+
+  /* =========================
+     FILTER PRODUCTS
+  ========================= */
+
+  const wishlistProducts =
+    products.filter((product) =>
+      wishlist.includes(
+        String(product._id)
+      )
+    );
+
+  /* =========================
+     REMOVE FROM WISHLIST
+  ========================= */
+
+  const removeFromWishlist = (id) => {
+    const updatedWishlist =
+      wishlist.filter(
+        (item) => item !== id
+      );
 
     setWishlist(updatedWishlist);
 
@@ -36,16 +100,24 @@ const Wishtlist = () => {
       "wishlist",
       JSON.stringify(updatedWishlist)
     );
+
+    window.dispatchEvent(
+      new Event("wishlistUpdated")
+    );
   };
 
-  // =========================
-  // ADD TO CART
-  // =========================
+  /* =========================
+     ADD TO CART
+  ========================= */
+
   const addToCart = (product) => {
     const savedCart =
-      JSON.parse(localStorage.getItem("cart")) || [];
+      JSON.parse(
+        localStorage.getItem("cart")
+      ) || [];
 
-    const selectedSize = product.sizes?.[0] || "";
+    const selectedSize =
+      product.sizes?.[0] || "";
 
     if (!selectedSize) {
       alert("Please select a size");
@@ -55,7 +127,8 @@ const Wishtlist = () => {
     const existingProductIndex =
       savedCart.findIndex(
         (item) =>
-          item.productId === product._id &&
+          item.productId ===
+            product._id &&
           item.size === selectedSize
       );
 
@@ -64,13 +137,17 @@ const Wishtlist = () => {
     if (existingProductIndex !== -1) {
       updatedCart = [...savedCart];
 
-      updatedCart[existingProductIndex].quantity += 1;
+      updatedCart[
+        existingProductIndex
+      ].quantity += 1;
     } else {
       const cartItem = {
         productId: product._id,
         name: product.name,
         price: product.price,
-        image: Array.isArray(product.image)
+        image: Array.isArray(
+          product.image
+        )
           ? product.image[0]
           : product.image,
         size: selectedSize,
@@ -89,13 +166,18 @@ const Wishtlist = () => {
       JSON.stringify(updatedCart)
     );
 
-    // Update navbar cart count
     window.dispatchEvent(
       new Event("cartUpdated")
     );
 
-    alert(`${product.name} added to cart`);
+    alert(
+      `${product.name} added to cart`
+    );
   };
+
+  /* =========================
+     RETURN
+  ========================= */
 
   return (
     <div className="wishlist-page">
@@ -107,13 +189,12 @@ const Wishtlist = () => {
       <div className="wishlist-header">
 
         <div>
+
           <span className="wishlist-small-title">
             YOUR COLLECTION
           </span>
 
-          <h1>
-            Wishlist
-          </h1>
+          <h1>Wishlist</h1>
 
           <p>
             {wishlistProducts.length}{" "}
@@ -122,6 +203,7 @@ const Wishtlist = () => {
               : "items"}{" "}
             saved
           </p>
+
         </div>
 
         <Heart
@@ -135,15 +217,18 @@ const Wishtlist = () => {
           EMPTY WISHLIST
       ========================= */}
 
-      {wishlistProducts.length === 0 ? (
+      {wishlistProducts.length ===
+      0 ? (
 
         <div className="empty-wishlist">
 
           <div className="empty-heart">
+
             <Heart
               size={55}
               strokeWidth={1.2}
             />
+
           </div>
 
           <h2>
@@ -157,10 +242,14 @@ const Wishtlist = () => {
           </p>
 
           <button
-            onClick={() => navigate("/shirts")}
+            onClick={() =>
+              navigate("/shirts")
+            }
           >
             EXPLORE SHIRTS
+
             <ArrowRight size={18} />
+
           </button>
 
         </div>
@@ -194,7 +283,9 @@ const Wishtlist = () => {
 
                   <img
                     src={
-                      Array.isArray(product.image)
+                      Array.isArray(
+                        product.image
+                      )
                         ? product.image[0]
                         : product.image
                     }
@@ -251,6 +342,7 @@ const Wishtlist = () => {
                       addToCart(product)
                     }
                   >
+
                     <span>
                       ADD TO CART
                     </span>
@@ -259,6 +351,7 @@ const Wishtlist = () => {
                       size={18}
                       strokeWidth={1.5}
                     />
+
                   </button>
 
                 </div>
