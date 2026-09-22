@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserRound, Mail, Phone, ChevronDown } from "lucide-react";
 
-import "./Complete.css";
+import "./complete.css";
 
 const CompleteProfile = () => {
   const navigate = useNavigate();
