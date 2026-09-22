@@ -166,7 +166,8 @@ const OTP = () => {
           // =================================
           try {
             const response = await fetch(
-              "http://localhost:5000/api/auth/verify-otp",
+               "https://internship-e-commerce-backend.vercel.app/api/auth/verify-otp",
+              // "http://localhost:5000/api/auth/verify-otp",
               {
                 method: "POST",
 
@@ -366,9 +367,8 @@ const OTP = () => {
         error
       );
 
-      alert(
-        "Unable to verify OTP"
-      );
+      alert("Unable to verify OTP"
+);
 
       setLoading(false);
     }
