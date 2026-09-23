@@ -33,7 +33,7 @@ const Profile = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/me",
+          "https://internship-e-commerce-backend.vercel.app/api/auth/me",
           {
             method: "GET",
             headers: {

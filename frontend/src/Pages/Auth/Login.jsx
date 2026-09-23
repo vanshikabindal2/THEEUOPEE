@@ -212,9 +212,7 @@ import { ArrowRight, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-// ==========================================
-// CONFIG
-// ==========================================
+
 const MSG91_SCRIPT_SRC =
   "https://verify.msg91.com/otp-provider.js";
 
@@ -635,5 +633,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

@@ -38,7 +38,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/cart/",
+        "https://internship-e-commerce-backend.vercel.app/api/cart/",
         {
           method: "GET",
           headers: {
@@ -165,7 +165,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/cart/${encodeURIComponent(
+        `https://internship-e-commerce-backend.vercel.app/api/cart/${encodeURIComponent(
           item.productId
         )}/${encodeURIComponent(item.size)}`,
         {
@@ -239,7 +239,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/cart/${encodeURIComponent(
+        `https://internship-e-commerce-backend.vercel.app/api/cart/${encodeURIComponent(
           item.productId
         )}/${encodeURIComponent(item.size)}`,
         {
@@ -307,7 +307,7 @@ const Cart = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/cart/${encodeURIComponent(
+        `https://internship-e-commerce-backend.vercel.app/api/cart/${encodeURIComponent(
           item.productId
         )}/${encodeURIComponent(item.size)}`,
         {

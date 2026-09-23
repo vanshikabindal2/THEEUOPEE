@@ -32,7 +32,7 @@ const AddAddress = () => {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/auth/me",
+          "https://internship-e-commerce-backend.vercel.app/api/auth/me",
           {
             method: "GET",
             headers: {
@@ -101,7 +101,7 @@ const AddAddress = () => {
       setLoading(true);
 
       const response = await fetch(
-        "http://localhost:5000/api/address/add",
+        "https://internship-e-commerce-backend.vercel.app/api/address/add",
         {
           method: "POST",
           headers: {

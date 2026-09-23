@@ -45,7 +45,7 @@ const Nav = () => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/cart/",
+        "https://internship-e-commerce-backend.vercel.app/api/cart/",
         {
           method: "GET",
           headers: {

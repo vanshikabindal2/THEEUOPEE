@@ -21,7 +21,7 @@ const SavedAddresses = () => {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/address",
+        "https://internship-e-commerce-backend.vercel.app/api/address",
         {
           method: "GET",
           headers: {
@@ -69,7 +69,7 @@ const SavedAddresses = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/address/${id}`,
+        `https://internship-e-commerce-backend.vercel.app/api/address/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -97,7 +97,7 @@ const SavedAddresses = () => {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:5000/api/address/${id}/default`,
+        `https://internship-e-commerce-backend.vercel.app/api/address/${id}/default`,
         {
           method: "PUT",
           headers: {
