@@ -1,3 +1,212 @@
+// import React, { useEffect, useState } from "react";
+// import { ArrowRight, Phone } from "lucide-react";
+// import { useNavigate } from "react-router-dom";
+// import "./Login.css";
+
+// // ==========================================
+// // CONFIG
+// // ==========================================
+// const MSG91_SCRIPT_SRC = "https://verify.msg91.com/otp-provider.js";
+// const WIDGET_ID = import.meta.env.VITE_MSG91_WIDGET_ID;
+// const TOKEN_AUTH = import.meta.env.VITE_MSG91_TOKEN_AUTH;
+
+// // Dashboard me captcha ON hai to true karo, OFF hai to false rakho.
+// // Dono jagah (dashboard + yaha) same hona chahiye.
+// const USE_CAPTCHA = false;
+// const CAPTCHA_DIV_ID = "msg91-captcha";
+
+// // Module-level flag: StrictMode me useEffect 2 baar chalta hai,
+// // isse init sirf ek hi baar hoga.
+// let msg91InitStarted = false;
+
+// const Login = () => {
+//   const navigate = useNavigate();
+
+//   const [phone, setPhone] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [msg91Ready, setMsg91Ready] = useState(false);
+
+//   // ==========================================
+//   // MSG91 OTP WIDGET INITIALIZATION
+//   // ==========================================
+//   console.log("ENV:", WIDGET_ID, TOKEN_AUTH);
+//   useEffect(() => {
+//     // Agar pehle hi init ho chuka hai (page revisit / StrictMode)
+//     if (msg91InitStarted) {
+//       if (window.__msg91Ready) setMsg91Ready(true);
+//       return;
+//     }
+
+//     if (!WIDGET_ID || !TOKEN_AUTH) {
+//       console.error(
+//         "MSG91 env missing. .env me VITE_MSG91_WIDGET_ID aur VITE_MSG91_TOKEN_AUTH daalo aur dev server restart karo."
+//       );
+//       return;
+//     }
+
+//     const configuration = {
+//       widgetId: WIDGET_ID,
+//       tokenAuth: TOKEN_AUTH,
+//       exposeMethods: true,
+//       identifier: "",
+//       ...(USE_CAPTCHA ? { captchaRenderId: CAPTCHA_DIV_ID } : {}),
+
+//       success: (data) => {
+//         console.log("MSG91 Widget initialized successfully:", data);
+//         window.__msg91Ready = true;
+//         setMsg91Ready(true);
+//       },
+
+//       failure: (error) => {
+//         console.error("MSG91 Widget initialization failed:", error);
+//         window.__msg91Ready = false;
+//         msg91InitStarted = false; // dobara try karne do
+//         setMsg91Ready(false);
+//       },
+//     };
+
+//     const initializeMSG91 = () => {
+//       if (typeof window.initSendOTP !== "function") {
+//         console.error("MSG91 initSendOTP function not found");
+//         return;
+//       }
+//       if (msg91InitStarted) return;
+//       msg91InitStarted = true;
+
+//       try {
+//         console.log("Initializing MSG91 OTP...");
+//         window.initSendOTP(configuration);
+//       } catch (error) {
+//         console.error("MSG91 initialization error:", error);
+//         msg91InitStarted = false;
+//         setMsg91Ready(false);
+//       }
+//     };
+
+//     // Script pehle se loaded hai
+//     if (typeof window.initSendOTP === "function") {
+//       initializeMSG91();
+//       return;
+//     }
+
+//     // Script tag hai lekin abhi load ho raha hai
+//     const existingScript = document.querySelector(
+//       `script[src="${MSG91_SCRIPT_SRC}"]`
+//     );
+
+//     if (existingScript) {
+//       existingScript.addEventListener("load", initializeMSG91, { once: true });
+//       return;
+//     }
+
+//     // Naya script load karo
+//     const script = document.createElement("script");
+//     script.src = MSG91_SCRIPT_SRC;
+//     script.async = true;
+//     script.onload = () => {
+//       console.log("MSG91 OTP script loaded");
+//       initializeMSG91();
+//     };
+//     script.onerror = () => {
+//       console.error("Unable to load MSG91 OTP script");
+//       setMsg91Ready(false);
+//     };
+//     document.head.appendChild(script);
+
+//     // Cleanup me script remove NAHI karna
+//   }, []);
+
+//   // ==========================================
+//   // SEND OTP
+//   // ==========================================
+//   const handleSendOtp = (e) => {
+//     e.preventDefault();
+
+//     if (phone.length !== 10) {
+//       alert("Please enter a valid 10 digit phone number");
+//       return;
+//     }
+
+//     if (typeof window.sendOtp !== "function") {
+//       alert("OTP service is not loaded. Please refresh the page.");
+//       return;
+//     }
+
+//     try {
+//       setLoading(true);
+
+//       // 9876543210 -> 919876543210 (+ ke bina)
+//       const identifier = `91${phone}`;
+//       console.log("Sending OTP to:", identifier);
+
+//       window.sendOtp(
+//         identifier,
+
+//         (data) => {
+//           console.log("MSG91 OTP sent successfully:", data);
+//           setLoading(false);
+//           navigate("/verify-otp", { state: { phone: identifier } });
+//         },
+
+//         (error) => {
+//           console.error("MSG91 SEND OTP ERROR:", error);
+//           setLoading(false);
+//           alert(
+//             "Unable to send OTP. Please check your MSG91 configuration and try again."
+//           );
+//         }
+//       );
+//     } catch (error) {
+//       console.error("Send OTP error:", error);
+//       setLoading(false);
+//       alert("Unable to send OTP. Please try again.");
+//     }
+//   };
+
+//   // ==========================================
+//   // UI
+//   // ==========================================
+//   return (
+//     <div className="auth-page">
+//       <div className="auth-box">
+//         <div className="auth-header">
+//           <h1>WELCOME BACK</h1>
+//           <p>Login or create your account using your phone number.</p>
+//         </div>
+
+//         <form onSubmit={handleSendOtp}>
+//           <label>PHONE NUMBER</label>
+
+//           <div className="phone-input">
+//             <span>+91</span>
+//             <Phone size={18} />
+//             <input
+//               type="tel"
+//               placeholder="Enter phone number"
+//               value={phone}
+//               maxLength={10}
+//               onChange={(e) => {
+//                 const value = e.target.value.replace(/\D/g, "");
+//                 setPhone(value);
+//               }}
+//             />
+//           </div>
+
+//           {/* Captcha ka div: sirf USE_CAPTCHA true ho tab. Conditional
+//               render ke andar hi rakha hai lekin stable (re-mount nahi hota). */}
+//           {USE_CAPTCHA && <div id={CAPTCHA_DIV_ID}></div>}
+
+//           <button type="submit" disabled={loading}>
+//             {loading ? "SENDING..." : "GET OTP"}
+//             {!loading && <ArrowRight size={18} />}
+//           </button>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
 import React, { useEffect, useState } from "react";
 import { ArrowRight, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -6,17 +215,19 @@ import "./Login.css";
 // ==========================================
 // CONFIG
 // ==========================================
-const MSG91_SCRIPT_SRC = "https://verify.msg91.com/otp-provider.js";
-const WIDGET_ID = import.meta.env.VITE_MSG91_WIDGET_ID;
-const TOKEN_AUTH = import.meta.env.VITE_MSG91_TOKEN_AUTH;
+const MSG91_SCRIPT_SRC =
+  "https://verify.msg91.com/otp-provider.js";
 
-// Dashboard me captcha ON hai to true karo, OFF hai to false rakho.
-// Dono jagah (dashboard + yaha) same hona chahiye.
+const WIDGET_ID =
+  import.meta.env.VITE_MSG91_WIDGET_ID;
+
+const TOKEN_AUTH =
+  import.meta.env.VITE_MSG91_TOKEN_AUTH;
+
 const USE_CAPTCHA = false;
 const CAPTCHA_DIV_ID = "msg91-captcha";
 
-// Module-level flag: StrictMode me useEffect 2 baar chalta hai,
-// isse init sirf ek hi baar hoga.
+// Prevent duplicate initialization
 let msg91InitStarted = false;
 
 const Login = () => {
@@ -27,93 +238,214 @@ const Login = () => {
   const [msg91Ready, setMsg91Ready] = useState(false);
 
   // ==========================================
-  // MSG91 OTP WIDGET INITIALIZATION
+  // MSG91 INITIALIZATION
   // ==========================================
-  console.log("ENV:", WIDGET_ID, TOKEN_AUTH);
   useEffect(() => {
-    // Agar pehle hi init ho chuka hai (page revisit / StrictMode)
-    if (msg91InitStarted) {
-      if (window.__msg91Ready) setMsg91Ready(true);
+    // ------------------------------------------
+    // If MSG91 methods are already available
+    // ------------------------------------------
+    if (
+      typeof window.sendOtp === "function"
+    ) {
+      console.log(
+        "MSG91 OTP methods already available"
+      );
+
+      setMsg91Ready(true);
       return;
     }
 
+    // ------------------------------------------
+    // Check ENV
+    // ------------------------------------------
     if (!WIDGET_ID || !TOKEN_AUTH) {
       console.error(
-        "MSG91 env missing. .env me VITE_MSG91_WIDGET_ID aur VITE_MSG91_TOKEN_AUTH daalo aur dev server restart karo."
+        "MSG91 environment variables are missing."
       );
+
+      console.error({
+        widgetIdLoaded: Boolean(WIDGET_ID),
+        tokenAuthLoaded: Boolean(TOKEN_AUTH),
+      });
+
       return;
     }
 
+    // ==========================================
+    // MSG91 CONFIG
+    // ==========================================
     const configuration = {
       widgetId: WIDGET_ID,
       tokenAuth: TOKEN_AUTH,
       exposeMethods: true,
       identifier: "",
-      ...(USE_CAPTCHA ? { captchaRenderId: CAPTCHA_DIV_ID } : {}),
+
+      ...(USE_CAPTCHA
+        ? {
+            captchaRenderId: CAPTCHA_DIV_ID,
+          }
+        : {}),
 
       success: (data) => {
-        console.log("MSG91 Widget initialized successfully:", data);
-        window.__msg91Ready = true;
-        setMsg91Ready(true);
+        console.log(
+          "MSG91 configuration success:",
+          data
+        );
       },
 
       failure: (error) => {
-        console.error("MSG91 Widget initialization failed:", error);
-        window.__msg91Ready = false;
-        msg91InitStarted = false; // dobara try karne do
-        setMsg91Ready(false);
+        console.error(
+          "MSG91 configuration failure:",
+          error
+        );
       },
     };
 
+    // ==========================================
+    // CHECK METHODS
+    // ==========================================
+    const checkMSG91Methods = () => {
+      const ready =
+        typeof window.sendOtp === "function" &&
+        typeof window.verifyOtp === "function" &&
+        typeof window.retryOtp === "function";
+
+      if (ready) {
+        console.log(
+          "MSG91 OTP methods are ready."
+        );
+
+        setMsg91Ready(true);
+
+        return true;
+      }
+
+      return false;
+    };
+
+    // ==========================================
+    // INITIALIZE MSG91
+    // ==========================================
     const initializeMSG91 = () => {
-      if (typeof window.initSendOTP !== "function") {
-        console.error("MSG91 initSendOTP function not found");
+      if (
+        typeof window.initSendOTP !==
+        "function"
+      ) {
+        console.error(
+          "MSG91 initSendOTP function not found."
+        );
+
         return;
       }
-      if (msg91InitStarted) return;
+
+      if (msg91InitStarted) {
+        return;
+      }
+
       msg91InitStarted = true;
 
       try {
-        console.log("Initializing MSG91 OTP...");
+        console.log(
+          "Initializing MSG91 OTP..."
+        );
+
         window.initSendOTP(configuration);
+
+        // --------------------------------------
+        // MSG91 methods may appear asynchronously
+        // --------------------------------------
+        let attempts = 0;
+
+        const checkInterval =
+          setInterval(() => {
+            attempts++;
+
+            if (checkMSG91Methods()) {
+              clearInterval(checkInterval);
+            }
+
+            // Stop checking after 15 seconds
+            if (attempts >= 30) {
+              clearInterval(checkInterval);
+
+              if (
+                typeof window.sendOtp !==
+                "function"
+              ) {
+                console.error(
+                  "MSG91 OTP methods were not loaded within 15 seconds."
+                );
+
+                setMsg91Ready(false);
+              }
+            }
+          }, 500);
       } catch (error) {
-        console.error("MSG91 initialization error:", error);
+        console.error(
+          "MSG91 initialization error:",
+          error
+        );
+
         msg91InitStarted = false;
         setMsg91Ready(false);
       }
     };
 
-    // Script pehle se loaded hai
-    if (typeof window.initSendOTP === "function") {
+    // ==========================================
+    // SCRIPT ALREADY LOADED
+    // ==========================================
+    if (
+      typeof window.initSendOTP ===
+      "function"
+    ) {
       initializeMSG91();
       return;
     }
 
-    // Script tag hai lekin abhi load ho raha hai
-    const existingScript = document.querySelector(
-      `script[src="${MSG91_SCRIPT_SRC}"]`
-    );
+    // ==========================================
+    // SCRIPT ALREADY LOADING
+    // ==========================================
+    const existingScript =
+      document.querySelector(
+        `script[src="${MSG91_SCRIPT_SRC}"]`
+      );
 
     if (existingScript) {
-      existingScript.addEventListener("load", initializeMSG91, { once: true });
+      existingScript.addEventListener(
+        "load",
+        initializeMSG91,
+        { once: true }
+      );
+
       return;
     }
 
-    // Naya script load karo
-    const script = document.createElement("script");
+    // ==========================================
+    // LOAD MSG91 SCRIPT
+    // ==========================================
+    const script =
+      document.createElement("script");
+
     script.src = MSG91_SCRIPT_SRC;
     script.async = true;
+
     script.onload = () => {
-      console.log("MSG91 OTP script loaded");
+      console.log(
+        "MSG91 OTP script loaded."
+      );
+
       initializeMSG91();
     };
+
     script.onerror = () => {
-      console.error("Unable to load MSG91 OTP script");
+      console.error(
+        "Unable to load MSG91 OTP script."
+      );
+
       setMsg91Ready(false);
     };
-    document.head.appendChild(script);
 
-    // Cleanup me script remove NAHI karna
+    document.head.appendChild(script);
   }, []);
 
   // ==========================================
@@ -122,44 +454,101 @@ const Login = () => {
   const handleSendOtp = (e) => {
     e.preventDefault();
 
+    // ------------------------------------------
+    // PHONE VALIDATION
+    // ------------------------------------------
     if (phone.length !== 10) {
-      alert("Please enter a valid 10 digit phone number");
+      alert(
+        "Please enter a valid 10 digit phone number"
+      );
       return;
     }
 
-    if (typeof window.sendOtp !== "function") {
-      alert("OTP service is not loaded. Please refresh the page.");
+    // ------------------------------------------
+    // CHECK MSG91
+    // ------------------------------------------
+    if (
+      typeof window.sendOtp !==
+      "function"
+    ) {
+      console.error(
+        "MSG91 sendOtp function is not available."
+      );
+
+      alert(
+        "OTP service is not ready. Please wait a moment and try again."
+      );
+
       return;
     }
 
     try {
       setLoading(true);
 
-      // 9876543210 -> 919876543210 (+ ke bina)
+      // 9876543210
+      // =>
+      // 919876543210
       const identifier = `91${phone}`;
-      console.log("Sending OTP to:", identifier);
 
+      console.log(
+        "Sending OTP to:",
+        identifier
+      );
+
+      // ========================================
+      // SEND OTP
+      // ========================================
       window.sendOtp(
         identifier,
 
+        // --------------------------------------
+        // SUCCESS
+        // --------------------------------------
         (data) => {
-          console.log("MSG91 OTP sent successfully:", data);
+          console.log(
+            "MSG91 OTP send request successful:",
+            data
+          );
+
           setLoading(false);
-          navigate("/verify-otp", { state: { phone: identifier } });
+
+          navigate(
+            "/verify-otp",
+            {
+              state: {
+                phone: identifier,
+              },
+            }
+          );
         },
 
+        // --------------------------------------
+        // FAILURE
+        // --------------------------------------
         (error) => {
-          console.error("MSG91 SEND OTP ERROR:", error);
+          console.error(
+            "MSG91 SEND OTP ERROR:",
+            error
+          );
+
           setLoading(false);
+
           alert(
-            "Unable to send OTP. Please check your MSG91 configuration and try again."
+            "Unable to send OTP. Please try again."
           );
         }
       );
     } catch (error) {
-      console.error("Send OTP error:", error);
+      console.error(
+        "Send OTP error:",
+        error
+      );
+
       setLoading(false);
-      alert("Unable to send OTP. Please try again.");
+
+      alert(
+        "Unable to send OTP. Please try again."
+      );
     }
   };
 
@@ -168,40 +557,81 @@ const Login = () => {
   // ==========================================
   return (
     <div className="auth-page">
+
       <div className="auth-box">
+
+        {/* HEADER */}
         <div className="auth-header">
-          <h1>WELCOME BACK</h1>
-          <p>Login or create your account using your phone number.</p>
+
+          <h1>
+            WELCOME BACK
+          </h1>
+
+          <p>
+            Login or create your account
+            using your phone number.
+          </p>
+
         </div>
 
+        {/* FORM */}
         <form onSubmit={handleSendOtp}>
-          <label>PHONE NUMBER</label>
+
+          <label>
+            PHONE NUMBER
+          </label>
 
           <div className="phone-input">
-            <span>+91</span>
+
+            <span>
+              +91
+            </span>
+
             <Phone size={18} />
+
             <input
               type="tel"
               placeholder="Enter phone number"
               value={phone}
               maxLength={10}
               onChange={(e) => {
-                const value = e.target.value.replace(/\D/g, "");
+                const value =
+                  e.target.value.replace(
+                    /\D/g,
+                    ""
+                  );
+
                 setPhone(value);
               }}
             />
+
           </div>
 
-          {/* Captcha ka div: sirf USE_CAPTCHA true ho tab. Conditional
-              render ke andar hi rakha hai lekin stable (re-mount nahi hota). */}
-          {USE_CAPTCHA && <div id={CAPTCHA_DIV_ID}></div>}
+          {/* CAPTCHA */}
+          {USE_CAPTCHA && (
+            <div
+              id={CAPTCHA_DIV_ID}
+            ></div>
+          )}
 
-          <button type="submit" disabled={loading}>
-            {loading ? "SENDING..." : "GET OTP"}
-            {!loading && <ArrowRight size={18} />}
+          {/* GET OTP */}
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "SENDING..."
+              : "GET OTP"}
+
+            {!loading && (
+              <ArrowRight size={18} />
+            )}
           </button>
+
         </form>
+
       </div>
+
     </div>
   );
 };
